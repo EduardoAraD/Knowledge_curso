@@ -3,11 +3,6 @@ module.exports = app => {
 
     const save = (req, res) => {
         const category = { ...req.body }
-        //const category = {
-        //    id: req.body.id,
-        //    name: req.body.name,
-        //    parentId: req.body.parentId
-        //}
         
         if(req.params.id) category.id = req.params.id
         
@@ -94,5 +89,21 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, remove, get, getById }
+    const toTree = (categories, tree) => {
+        if(!tree) tree = categories.filter(c => !c.parentId)
+        tree = tree.map(parentNode => {
+            const isChield = node => node.parentId == parentNode.id
+            parentNode.children = toTree(categories, categories.filter(isChield))
+            return parentNode
+        })
+        return tree
+    }
+    
+    const getTree = (req, res) => {
+        app.db('categories')
+            .then(categories => res.json(toTree(categories)))
+            .catch(err => res.status(500).send(err))
+    }
+
+    return { save, remove, get, getById, getTree }
 }
