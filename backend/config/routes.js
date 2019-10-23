@@ -1,6 +1,8 @@
+const admin = require('./admin')
+
 module.exports = app => {
     app.post('/signup', app.api.user.save)
-    app.post('/signin', app.api.autn.signin)
+    app.post('/signin', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.validateToken)
 
     app.route('/users')
@@ -43,4 +45,9 @@ module.exports = app => {
     app.route('/categories/:id/articles')
         .all(app.config.passport.authenticate())
         .get(app.api.article.getByCategory)
+
+    app.route('/stats')
+        .all(app.config.passport.authenticate())
+        .get(app.api.stat.get)
+    
 }
