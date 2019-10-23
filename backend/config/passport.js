@@ -14,7 +14,7 @@ module.exports = app => {
             .where({ id: payload.id })
             .first()
             .then(user => done(null, user ? { ...payload } : false))
-            .catch(err => done(err,false))
+            .catch(err => done(err, false))
     })
 
     passport.use(strategy)
