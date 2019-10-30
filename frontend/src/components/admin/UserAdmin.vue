@@ -6,7 +6,7 @@
                 <b-col md="6" sm="12">
                     <b-form-group label="Nome" label-for="user-name">
                         <b-form-input id="user-name" type="text"
-                            v-model="user.nome" required
+                            v-model="user.name" required
                             placeholder="Informe o Nome do Usuário..."
                         ></b-form-input>
                     </b-form-group>
@@ -49,7 +49,7 @@
                 </b-col>
             </b-row>
         </b-from>
-        <b-table hover striped: items="users" :fields="fields">
+        <b-table hover striped :items="users" :fields="fields">
             <template slot="actions" slot-scope="data">
                 <b-button variant="warning" @click="loadUser(data.item)" class="mr-2">
                     <i class="fa fa-pencil"></i>
